@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Assistant — PM Accelerator Assessment</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">🌤️ Weather Assistant</div>
+    <div class="sub-brand">
+      Built by <strong>Nitin Madanala</strong><br />
+      PM Accelerator Tech Assessment #2
+    </div>
+
+    <div class="export-bar">
+      <button type="button" class="btn" onclick="exportData('csv')">⬇ CSV</button>
+      <button type="button" class="btn" onclick="exportData('json')">⬇ JSON</button>
+      <button type="button" class="btn" onclick="exportData('markdown')">⬇ MD</button>
+      <button type="button" class="btn" onclick="showAbout()">ℹ️ About</button>
+    </div>
+
+    <div class="history-title">Saved DB Queries (CRUD)</div>
+    <div id="historyList" class="history-list"></div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <span><strong>FastAPI + SQLite + Open-Meteo + Travel Advisor</strong></span>
+      <a href="/docs" target="_blank" rel="noopener noreferrer" class="docs-link">Swagger API Docs ↗</a>
+    </div>
+
+    <div id="error-banner" class="error-banner">
+      <span id="error-text"></span>
+      <button type="button" class="btn btn-close" onclick="hideError()">✕</button>
+    </div>
+
+    <div id="chat" class="chat-container">
+      <div class="msg assistant">
+        <div class="avatar assistant">Weather</div>
+        <div class="bubble">
+          Hi! Enter any <strong>city, landmark, postal code, or GPS coordinates</strong> with an optional date range and I’ll fetch real-time meteorological data (5-day default forecast), surface travel considerations, and save the record to SQLite.<br /><br />
+          <strong>Try typing:</strong><br />
+          • <code>Charminar, Hyderabad 2026-11-13 to 2026-11-17</code><br />
+          • <code>500001</code><br />
+          • <code>17.3616, 78.4747</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-wrap">
+      <form class="input-box" onsubmit="handleSend(event)">
+        <input
+          type="text"
+          id="location-input"
+          placeholder="Enter city, ZIP, landmark, or GPS (e.g., 17.3616, 78.4747)"
+          required
+        />
+        <button type="button" id="geo-btn" class="geo-btn" onclick="useCurrentLocation()">
+          📍 Current Location
+        </button>
+        <button type="submit" id="send-btn" class="send-btn">Send</button>
+      </form>
+      <div class="hint">
+        Defaults to a 5-day forecast (today + 4 days). Supports cities, ZIP/postal codes, landmarks, GPS coordinates, and YYYY-MM-DD date ranges.
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
